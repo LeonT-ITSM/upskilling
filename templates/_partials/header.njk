@@ -1,8 +1,7 @@
-{% from "govuk/components/header/macro.njk" import govukheader %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
 
 {% block header %}
   {{ govukHeader({
-    homepageUrl: "£"
+    homepageUrl: "/"
   }) }}
-  <h1>Header Test</h1>
 {% endblock %}

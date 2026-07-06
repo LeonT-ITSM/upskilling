@@ -9,6 +9,8 @@ const app = express();
 nunjucks.configure(["templates", "node_modules/govuk-frontend/dist"], {
   autoescape: true,
   express: app,
+  noCache: true,
+  watch: true,
 });
 
 app.set("view engine", "njk");
