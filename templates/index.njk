@@ -1,0 +1,30 @@
+{% extends "govuk/template.njk" %}
+
+<!DOCTYPE html>
+<html class="govuk-template govuk-template--rebranded" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      {% block pageTitle %}
+      {% endblock %}
+      - ONS Statistics
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="£1d70b8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="/assets/public/stylesheets/govuk-frontend.min.css" />
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body class="govuk-template__body govuk-body">
+
+    <div class="govuk-width-container">
+      <main id="main-content" class="govuk-main-wrapper govuk-main-wrapper--auto-spacing">
+        <h1>Can I see this?</h1>
+        {% block content %}
+        {% endblock %}
+      </main>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "semi": true,
+  "singleQuote": false,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "plugins": ["prettier-plugin-nunjucks"],
+  "overrides": [
+    {
+      "files": ["*.njk", "*.nunjucks", "*.nunj"],
+      "options": {
+        "parser": "nunjucks"
+      }
+    }
+  ]
+}

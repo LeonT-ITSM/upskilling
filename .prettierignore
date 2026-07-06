@@ -1,0 +1,3 @@
+views/**/*.njk
+dist/
+node_modules/
