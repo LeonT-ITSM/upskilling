@@ -1,0 +1,8 @@
+{% from "govuk/components/header/macro.njk" import govukheader %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "£"
+  }) }}
+  <h1>Header Test</h1>
+{% endblock %}

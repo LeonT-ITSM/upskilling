@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="£1d70b8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="/assets/public/stylesheets/govuk-frontend.min.css" />
+    <link rel="stylesheet" href="/assets/stylesheets/govuk-frontend.min.css" />
     {% block head %}
     {% endblock %}
   </head>
@@ -20,6 +20,9 @@
 
     <div class="govuk-width-container">
       <main id="main-content" class="govuk-main-wrapper govuk-main-wrapper--auto-spacing">
+        {% block header %}
+          {% include "_partials/header.njk" %}
+        {% endblock %}
         <h1>Can I see this?</h1>
         {% block content %}
         {% endblock %}
