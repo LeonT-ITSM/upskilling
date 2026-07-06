@@ -9,7 +9,9 @@
     "build": "tsc",
     "start": "node dist/app.js",
     "prettier": "prettier --no-error-on-unmatched-pattern --check **/*.{ts,js} --ignore-path ../.prettierignore",
-    "prettier:fix": "prettier --write **/*.{ts,js} --ignore-path ../.prettierignore"
+    "prettier:fix": "prettier --write **/*.{ts,js} --ignore-path ../.prettierignore",
+    "lint": "eslint server",
+    "lint:fix": "eslint server --fix"
   },
   "keywords": [],
   "author": "",
@@ -23,13 +25,18 @@
     "nunjucks": "^3.2.4"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.0",
     "@types/nunjucks": "^3.2.6",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-security": "^4.0.1",
     "nodemon": "^3.1.14",
     "prettier": "3.9.4",
     "prettier-plugin-nunjucks": "^0.1.4",
     "ts-node": "^10.9.2",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.1"
   }
 }

@@ -1,5 +1,5 @@
 {
   "version": "0.2",
-  "words": ["govuk", "nunjucks", "njk", "color", "stylesheet"],
+  "words": ["govuk", "nunjucks", "njk", "color", "stylesheet", "semgrep"],
   "ignorePaths": ["node_modules/**", "dist/**"]
 }
