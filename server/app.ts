@@ -1,6 +1,7 @@
 import express from "express";
-import nunjucks from "nunjucks";
 import dotenv from "dotenv";
+dotenv.config();
+import nunjucks from "nunjucks";
 import { connectDB } from "./db";
 import morgan from "morgan";
 import path from "path";
@@ -42,5 +43,4 @@ app.use(
 app.use(morgan("tiny"));
 app.use("/", routes);
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Running on http://localhost:${PORT}`));
