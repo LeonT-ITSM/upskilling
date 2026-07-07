@@ -19,8 +19,12 @@
   "type": "commonjs",
   "dependencies": {
     "@types/morgan": "^1.9.10",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "govuk-frontend": "^6.3.0",
+    "mongoose": "^9.7.4",
     "morgan": "^1.11.0",
     "nunjucks": "^3.2.4"
   },
