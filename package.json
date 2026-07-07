@@ -2,7 +2,7 @@
   "name": "upskilling",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec ts-node server/app.ts",
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.0",
     "@types/nunjucks": "^3.2.6",

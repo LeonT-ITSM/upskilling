@@ -1,11 +1,16 @@
-FROM node:20-bookworm-slim
-
+FROM node:20-bookworm-slim AS build
 WORKDIR /workspace
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
 
+FROM node:20-bookworm-slim
+WORKDIR /workspace
 COPY package*.json ./
 RUN npm ci --omit=dev
-
-COPY . .
-
+COPY --from=build /workspace/dist ./dist
+COPY public ./public
+COPY templates ./templates
 EXPOSE 3000
-CMD ["node", "app.js"]
+CMD ["node", "dist/app.js"]
