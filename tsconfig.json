@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "commonjs",
-    "rootDir": ".",
+    "rootDir": "server",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,

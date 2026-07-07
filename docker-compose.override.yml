@@ -8,9 +8,8 @@ services:
       - .:/workspace:cached
     environment:
       NODE_ENV: ${NODE_ENV:-development}
-      DEBUG: ${DEBUG:-*}
-      MONGO_URL: ${MONGO_URL:-mongodb://mongo:27017/bincollection?replicaSet=rs0}
-    command: sh -lc "npm install && npx nodemon app.js"
+      MONGO_URL: ${MONGO_URL:-mongodb://mongo:27017/upskilling}
+    command: sh -lc "npm install && npm run dev"
 
   mongo:
     ports:

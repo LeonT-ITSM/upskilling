@@ -25,7 +25,7 @@ connectDB()
   .then(() => {
     app.listen(PORT, () => console.log("running on port: ${PORT}"));
   })
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("Failed to connect to MongoDB", err);
     process.exit(1);
   });
@@ -42,5 +42,3 @@ app.use(
 
 app.use(morgan("tiny"));
 app.use("/", routes);
-
-app.listen(PORT, () => console.log(`Running on http://localhost:${PORT}`));
