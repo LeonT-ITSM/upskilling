@@ -5,10 +5,6 @@ import { configureNunjucks } from "./nunjucks-configuration";
 import { connectDB } from "./db";
 import morgan from "morgan";
 import path from "path";
-import bcrypt from "bcrypt";
-export const hashPassword = (password: string): Promise<string> => bcrypt.hash(password, 12);
-export const verifyPassword = (password: string, hash: string): Promise<boolean> =>
-  bcrypt.compare(password, hash);
 import routes from "./routes";
 
 const app = express();
