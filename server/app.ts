@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import nunjucks from "nunjucks";
+import { configureNunjucks } from "./nunjucks-configuration";
 import { connectDB } from "./db";
 import morgan from "morgan";
 import path from "path";
@@ -14,16 +14,11 @@ import routes from "./routes";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-nunjucks.configure(["templates", "node_modules/govuk-frontend/dist"], {
-  autoescape: true,
-  express: app,
-  noCache: true,
-  watch: true,
-});
+configureNunjucks(app);
 
 connectDB()
   .then(() => {
-    app.listen(PORT, () => console.log("running on port: ${PORT}"));
+    app.listen(PORT, () => console.log(`running on port: ${PORT}`));
   })
   .catch((err: unknown) => {
     console.error("Failed to connect to MongoDB", err);
