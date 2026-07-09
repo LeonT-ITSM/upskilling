@@ -1,4 +1,4 @@
-import { express } from "express";
+import { Express } from "express";
 import session from "express-session";
 
 export const configureSession = (app: Express): void => {
@@ -14,7 +14,7 @@ export const configureSession = (app: Express): void => {
       store: myStore, // TO DO
       cookie: {
         httpOnly: true,
-        sameSite: "Strict",
+        sameSite: "strict",
         secure: process.env.NODE_ENV === "production",
         maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
       },
