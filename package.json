@@ -19,6 +19,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@types/express-session": "^1.19.0",
     "@types/morgan": "^1.9.10",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",

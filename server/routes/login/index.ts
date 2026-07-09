@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { User } from "../../models/user";
 
 const router = Router();
@@ -7,6 +7,10 @@ router.get("/login", (req, res) => {
   res.render("login/index.njk");
 });
 
+interface LoginBody {
+  email: string;
+  password: string;
+}
 router.post("/login", async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email.toLowerCase() });
