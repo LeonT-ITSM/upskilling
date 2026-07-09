@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { User } from "../../models/user";
+import { AuthRateLimit } from "../../middleware/rate-limit";
 
 const router = Router();
 
@@ -11,23 +12,27 @@ interface LoginBody {
   email: string;
   password: string;
 }
-router.post("/login", async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email: email.toLowerCase() });
+router.post(
+  "/login",
+  AuthRateLimit,
+  async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email.toLowerCase() });
 
-  if (!user || !(await user.comparePassword(password))) {
-    res.render("login/index.njk", {
-      errors: {
-        errorSummary: [{ text: "Incorrect email or password", href: "#email" }],
-        fieldErrors: {
-          email: { text: "Incorrect email or password" },
+    if (!user || !(await user.comparePassword(password))) {
+      res.render("login/index.njk", {
+        errors: {
+          errorSummary: [{ text: "Incorrect email or password", href: "#email" }],
+          fieldErrors: {
+            email: { text: "Incorrect email or password" },
+          },
         },
-      },
-    });
-    return;
+      });
+      return;
+    }
+    req.session.userID = user.id;
+    res.redirect("/");
   }
-  req.session.userID = user.id;
-  res.redirect("/");
-});
+);
 
 export default router;

@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import { configureNunjucks } from "./nunjucks-configuration";
+import { configureSession } from "./middleware/session";
+import { configureGlobalRateLimit } from "./middleware/rate-limit";
 import { connectDB } from "./db";
 import morgan from "morgan";
 import path from "path";
@@ -9,8 +11,6 @@ import routes from "./routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-configureNunjucks(app);
 
 connectDB()
   .then(() => {
@@ -31,5 +31,8 @@ app.use(
   express.static(path.join(__dirname, "../public"))
 );
 
+configureNunjucks(app);
+configureSession(app);
+configureGlobalRateLimit(app);
 app.use(morgan("tiny"));
 app.use("/", routes);
