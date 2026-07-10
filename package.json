@@ -11,8 +11,7 @@
     "prettier": "prettier --no-error-on-unmatched-pattern --check **/*.{ts,js} --ignore-path ../.prettierignore",
     "prettier:fix": "prettier --write **/*.{ts,js} --ignore-path ../.prettierignore",
     "lint": "eslint server",
-    "lint:fix": "eslint server --fix",
-    "docker:build": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build"
+    "lint:fix": "eslint server --fix"
   },
   "keywords": [],
   "author": "",
