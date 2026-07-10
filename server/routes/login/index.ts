@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { User } from "../../models/user";
 import { AuthRateLimit } from "../../middleware/rate-limit";
 import { checkValidation, loginValidationRules } from "../../middleware/login-validation";
@@ -14,11 +14,12 @@ interface LoginBody {
   password: string;
 }
 
+// Check data validation as middleware. If validation passes then check if username/password are correct and proceed, else redirect.
 router.post(
   "/login",
   AuthRateLimit,
   loginValidationRules,
-  checkValidation,
+  checkValidation("login/index.njk"),
   async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
     const { email, password } = req.body;
 
@@ -44,9 +45,37 @@ router.get("/signup", (req, res) => {
 router.post(
   "/signup",
   AuthRateLimit,
-  async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
+  loginValidationRules,
+  checkValidation("login/signup.njk"),
+  async (req: Request<unknown, unknown, LoginBody>, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (user) {
+      res.render("login/signup.njk", {
+        errors: {
+          errorSummary: [{ text: "That email address is already registered", href: "#email" }],
+        },
+      });
+      return;
+    }
+
+    try {
+      const newUser = await User.create({ email, password });
+      req.session.userID = newUser.id;
+      res.redirect("/");
+    } catch (err: unknown) {
+      next(err);
+    }
   }
 );
+
+router.post("/logout", (req: Request, res: Response, next: NextFunction) => {
+  req.session.destroy((err) => {
+    if (err) return next(err);
+    res.clearCookie("app-session");
+    res.redirect("/login");
+  });
+});
 
 export default router;
