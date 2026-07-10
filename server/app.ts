@@ -32,9 +32,9 @@ app.use(
   express.static(path.join(__dirname, "../public"))
 );
 
+configureGlobalRateLimit(app); // Global rate limiter configuration
 configureNunjucks(app); // Nunjucks configuration
 configureSession(app); // express-session configuration
 app.use(attachCurrentUser); // Attaches user data to requests if signed in
-configureGlobalRateLimit(app); // Global rate limiter configuration
 app.use(morgan("tiny"));
 app.use("/", routes);
