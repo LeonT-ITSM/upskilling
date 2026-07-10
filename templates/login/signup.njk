@@ -1,0 +1,83 @@
+{% extends "index.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/password-input/macro.njk" import govukPasswordInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block pageTitle -%}
+  Register
+{%- endblock %}
+
+{% block content %}
+  {% if errors %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: errors.errorSummary
+    }) }}
+  {% endif %}
+
+  <h1 class="govuk-heading-xl">Create your account</h1>
+
+  <div class="govuk-grid-row govuk-body">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" autocomplete="off">
+
+        {{ govukInput({
+          label: {
+            text: "Email address"
+          },
+          classes: "govuk-!-width-two-thirds",
+          id: "email",
+          name: "email",
+          spellcheck: false,
+          errorMessage: errors.fieldErrors.email and{
+            text: errors.fieldErrors.email.text
+          },
+          attributes: {
+            "autocapitalize": "off"
+          }
+        }) }}
+
+        {{ govukPasswordInput({
+          label: {
+            text: "Password"
+          },
+          id: "password",
+          name: "password",
+          classes: "govuk-!-width-two-thirds",
+          attributes: {
+            autocomplete: false,
+            spellcheck: false
+          },
+          errorMessage: errors.fieldErrors.password and{
+            text: errors.fieldErrors.password.text
+          }
+        }) }}
+        {{ govukPasswordInput({
+          label: {
+            text: "Confirm Password"
+          },
+          id: "confirm-password",
+          name: "confirm-password",
+          classes: "govuk-!-width-two-thirds",
+          attributes: {
+            autocomplete: false,
+            spellcheck: false
+          },
+          errorMessage: errors.fieldErrors.password and{
+            text: errors.fieldErrors.password.text
+          }
+        }) }}
+
+        {{ govukButton({
+          text: "Submit"
+        }) }}
+      </form>
+
+    </div>
+    {% include "_partials/before-you-start.njk" %}
+  </div>
+  <div class="govuk-grid-row govuk-body">
+    {% include "_partials/contact.njk" %}
+  </div>
+{% endblock %}
