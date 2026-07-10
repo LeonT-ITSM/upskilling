@@ -4,4 +4,12 @@
   {{ govukHeader({
     homepageUrl: "/"
   }) }}
+  {% if currentUser %}
+    {{ currentUser.email }}
+    <form method="POST" action="/logout" style="display:inline">
+      <button class="govuk-link" type="submit">Sign out</button>
+    </form>
+  {% else %}
+    <a class="govuk-link" href="/login">Sign in</a>
+  {% endif %}
 {% endblock %}

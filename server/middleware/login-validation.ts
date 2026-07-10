@@ -21,29 +21,33 @@ interface fieldErrors {
   [key: string]: { text: string };
 }
 
-export function checkValidation(req: Request, res: Response, next: NextFunction): void {
-  const result = validationResult(req);
+export function checkValidation(template: string) {
+  return function (req: Request, res: Response, next: NextFunction): void {
+    const result = validationResult(req);
 
-  if (!result.isEmpty()) {
-    const errorList: errorSummary[] = result.array().map((err: ValidationError) => ({
-      text: err.msg,
-      href: `#${"path" in err ? err.path : ""}`,
-    }));
+    if (!result.isEmpty()) {
+      const errorList: errorSummary[] = result.array().map((err: ValidationError) => ({
+        text: err.msg,
+        href: `#${"path" in err ? err.path : ""}`,
+      }));
 
-    const errors: fieldErrors = {};
-    result.array().forEach((err: ValidationError) => {
-      if ("path" in err && !errors[err.path]) {
-        errors[err.path] = { text: err.msg };
-      }
-    });
+      const fieldErrors: fieldErrors = {};
+      result.array().forEach((err: ValidationError) => {
+        if ("path" in err && !fieldErrors[err.path]) {
+          fieldErrors[err.path] = { text: err.msg };
+        }
+      });
 
-    res.status(400).render("login", {
-      errorList,
-      errors,
-      email: req.body.email,
-    });
-    return;
-  }
+      res.status(400).render(template, {
+        errors: {
+          errorSummary: errorList,
+          fieldErrors: fieldErrors,
+        },
+        email: req.body.email,
+      });
+      return;
+    }
 
-  next();
+    next();
+  };
 }

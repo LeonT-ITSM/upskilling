@@ -21,7 +21,7 @@
 
   <div class="govuk-grid-row govuk-body">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" autocomplete="off">
+      <form method="POST" action="/login" autocomplete="off">
 
         {{ govukInput({
           label: {
@@ -30,6 +30,7 @@
           classes: "govuk-!-width-two-thirds",
           id: "email",
           name: "email",
+          value: email,
           spellcheck: false,
           errorMessage: errors.fieldErrors.email and{
             text: errors.fieldErrors.email.text
@@ -60,10 +61,16 @@
         }) }}
       </form>
 
+      <h2 class="govuk-heading-m">No sign in details</h2>
+
       <p class="govuk-!-margin-bottom-6">
-        <a class="govuk-link" href="/reset-password" data-cy="reset-password">
-          I’ve forgotten my password
-        </a>
+        <a class="govuk-link" href="/signup">I don't have an account</a>
+      </p>
+
+      <h2 class="govuk-heading-m">Problems signing in</h2>
+
+      <p class="govuk-!-margin-bottom-6">
+        <a class="govuk-link" href="/reset-password">I’ve forgotten my password</a>
       </p>
 
     </div>
