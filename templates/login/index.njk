@@ -1,9 +1,9 @@
+{% extends "index.njk" %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/password-input/macro.njk" import govukPasswordInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% extends "index.njk" %}
 
 {% block pageTitle -%}
   Login
@@ -13,21 +13,7 @@
   {% if errors %}
     {{ govukErrorSummary({
       titleText: "There is a problem",
-      errorList: errors.errorSummary,
-    }) }}
-  {% endif %}
-
-  {% if passwordreset %}
-    {{ govukInsetText({
-      classes: "govuk-!-margin-top-0",
-      html: '<p>We`ve sent an email to the address you have provided. Please check your inbox and spam folder for a message from us. </p><p>If you require further assistance please contact <a class="govuk-link" href="mailTo:' + CONTACT_US_EMAIL_ADDRESS + '"> ' + CONTACT_US_EMAIL_ADDRESS + '</a>.</p>',
-    }) }}
-  {% endif %}
-
-  {% if passwordupdated %}
-    {{ govukInsetText({
-      classes: "govuk-!-margin-top-0",
-      text: "Password updated. Please log in."
+      errorList: errors.errorSummary
     }) }}
   {% endif %}
 
@@ -46,7 +32,7 @@
           name: "email",
           spellcheck: false,
           errorMessage: errors.fieldErrors.email and{
-            text: errors.fieldErrors.email.text,
+            text: errors.fieldErrors.email.text
           },
           attributes: {
             "autocapitalize": "off"
@@ -65,12 +51,12 @@
             spellcheck: false
           },
           errorMessage: errors.fieldErrors.password and{
-            text: errors.fieldErrors.password.text,
+            text: errors.fieldErrors.password.text
           }
         }) }}
 
         {{ govukButton({
-          text: "Sign in",
+          text: "Sign in"
         }) }}
       </form>
 
