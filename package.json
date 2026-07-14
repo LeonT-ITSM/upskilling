@@ -22,6 +22,7 @@
     "@types/morgan": "^1.9.10",
     "bcrypt": "^6.0.0",
     "connect-mongo": "^6.0.0",
+    "csrf-sync": "^4.2.1",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.2",

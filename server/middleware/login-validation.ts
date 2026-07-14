@@ -21,6 +21,7 @@ interface fieldErrors {
   [key: string]: { text: string };
 }
 
+// Check if validation failed and if so, pass errors back to the screen
 export function checkValidation(template: string) {
   return function (req: Request, res: Response, next: NextFunction): void {
     const result = validationResult(req);

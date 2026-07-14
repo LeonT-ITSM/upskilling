@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { rateLimit } from "express-rate-limit";
 
-// Less strict global rate limit
+// global rate limit
 export const configureGlobalRateLimit = (app: Express): void => {
   app.use(
     rateLimit({
