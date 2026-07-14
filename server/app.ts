@@ -5,6 +5,7 @@ import { configureNunjucks } from "./nunjucks-configuration";
 import { configureSession } from "./middleware/session";
 import { configureGlobalRateLimit } from "./middleware/rate-limit";
 import { attachCurrentUser } from "./middleware/current-user";
+import { csrfSynchronisedProtection, generateToken } from "./middleware/csrf";
 import { connectDB } from "./db";
 import morgan from "morgan";
 import path from "path";
@@ -36,5 +37,13 @@ configureGlobalRateLimit(app); // Global rate limiter configuration
 configureNunjucks(app); // Nunjucks configuration
 configureSession(app); // express-session configuration
 app.use(attachCurrentUser); // Attaches user data to requests if signed in
+app.use((req, res, next) => {
+  // CSRF token generation is called on login/signup pages and globally once a user has signed in (sign out button is present in the header)
+  if (res.locals.currentUser || req.path === "/login" || req.path === "/signup") {
+    res.locals.csrfToken = generateToken(req);
+  }
+  next();
+});
+app.use(csrfSynchronisedProtection); // Global CSRF token validation
 app.use(morgan("tiny"));
 app.use("/", routes);
