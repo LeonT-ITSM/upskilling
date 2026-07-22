@@ -8,6 +8,7 @@ import { attachCurrentUser } from "./middleware/current-user";
 import { csrfSynchronisedProtection, generateToken } from "./middleware/csrf";
 import { connectDB } from "./db";
 import { error404Handler } from "./middleware/error-404";
+import { globalErrorHandler } from "./middleware/error-global";
 import morgan from "morgan";
 import path from "path";
 import routes from "./routes";
@@ -50,3 +51,4 @@ app.use(morgan("tiny"));
 app.use("/", routes);
 
 app.use(error404Handler); // catches 404 errors
+app.use(globalErrorHandler); // catches all other errors
