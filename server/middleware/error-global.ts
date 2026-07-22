@@ -1,12 +1,25 @@
 import { Request, Response, NextFunction } from "express";
+import { HttpError } from "../types/http-error";
 
-export function error404Handler(req: Request, res: Response, next: NextFunction): void {
-  res.status(404).render("errors/index.njk", {
-    status: 404,
-    title: "Page not found",
-    message: [
-      "If you typed the web address, check it is correct.",
-      "If you pasted the web address, check you copied the entire address.",
-    ],
-  });
+export function globalErrorHandler(
+  err: unknown,
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  console.error(err);
+
+  if (err instanceof HttpError) {
+    res.status(err.statusCode).render("errors/index.njk", {
+      statusCode: err.statusCode,
+      title: err.title,
+      message: [err.message],
+    });
+  } else {
+    res.status(500).render("errors/index.njk", {
+      statusCode: 500,
+      title: "Sorry, there is a problem with the service",
+      message: ["An unexpected error occurred. Please try again later."],
+    });
+  }
 }
