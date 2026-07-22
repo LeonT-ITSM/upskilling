@@ -7,6 +7,7 @@ import { configureGlobalRateLimit } from "./middleware/rate-limit";
 import { attachCurrentUser } from "./middleware/current-user";
 import { csrfSynchronisedProtection, generateToken } from "./middleware/csrf";
 import { connectDB } from "./db";
+import { error404Handler } from "./middleware/error";
 import morgan from "morgan";
 import path from "path";
 import routes from "./routes";
@@ -47,3 +48,5 @@ app.use((req, res, next) => {
 app.use(csrfSynchronisedProtection); // Global CSRF token validation
 app.use(morgan("tiny"));
 app.use("/", routes);
+
+app.use(error404Handler); // catches 404 errors
