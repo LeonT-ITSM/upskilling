@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { User } from "../../models/user";
 import { AuthRateLimit } from "../../middleware/rate-limit";
 import { checkValidation, loginValidationRules } from "../../middleware/login-validation";
+import { HttpError } from "../../types/http-error";
 
 const router = Router();
 
@@ -47,7 +48,7 @@ router.post(
   AuthRateLimit,
   loginValidationRules,
   checkValidation("login/signup.njk"),
-  async (req: Request<unknown, unknown, LoginBody>, res: Response, next: NextFunction) => {
+  async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email.toLowerCase() });
 
@@ -60,13 +61,9 @@ router.post(
       return;
     }
 
-    try {
-      const newUser = await User.create({ email, password });
-      req.session.userID = newUser.id;
-      res.redirect("/");
-    } catch (err: unknown) {
-      next(err);
-    }
+    const newUser = await User.create({ email, password });
+    req.session.userID = newUser.id;
+    res.redirect("/");
   }
 );
 
