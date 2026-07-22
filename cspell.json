@@ -1,5 +1,14 @@
 {
   "version": "0.2",
-  "words": ["govuk", "nunjucks", "njk", "color", "stylesheet", "semgrep", "autocapitalize"],
+  "words": [
+    "govuk",
+    "nunjucks",
+    "njk",
+    "color",
+    "stylesheet",
+    "semgrep",
+    "autocapitalize",
+    "endfor"
+  ],
   "ignorePaths": ["node_modules/**", "dist/**"]
 }
