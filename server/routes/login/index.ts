@@ -2,7 +2,6 @@ import { Router, Request, Response, NextFunction } from "express";
 import { User } from "../../models/user";
 import { AuthRateLimit } from "../../middleware/rate-limit";
 import { checkValidation, loginValidationRules } from "../../middleware/login-validation";
-import { HttpError } from "../../types/http-error";
 
 const router = Router();
 
