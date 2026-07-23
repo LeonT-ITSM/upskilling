@@ -7,6 +7,9 @@ const router = express.Router();
 
 router.use("/", loginRoutes);
 router.use("/", defaultRoute);
-router.use("/", testRoutes);
+
+if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "test") {
+  router.use("/test", testRoutes);
+}
 
 export default router;

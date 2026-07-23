@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
-export function error404Handler(req: Request, res: Response, next: NextFunction): void {
+export function error404Handler(req: Request, res: Response): void {
   res.status(404).render("errors/index.njk", {
     statusCode: 404,
     title: "Page not found",

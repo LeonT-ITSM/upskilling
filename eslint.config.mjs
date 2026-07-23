@@ -15,6 +15,9 @@ export default tseslint.config(
         project: "./tsconfig.json",
       },
     },
+    rules: {
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    },
   },
   {
     ignores: ["dist/**", "node_modules/**", "public/**"],
