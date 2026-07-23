@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { User } from "../../models/user";
+import { User, compareToDummyHash } from "../../models/user";
 import { AuthRateLimit } from "../../middleware/rate-limit";
 import {
   checkValidation,
@@ -28,8 +28,11 @@ router.post(
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email.toLowerCase() });
+    const isValidPassword = user
+      ? await user.comparePassword(password)
+      : await compareToDummyHash(password);
 
-    if (!user || !(await user.comparePassword(password))) {
+    if (!user || !isValidPassword) {
       res.render("login/index.njk", {
         errors: {
           errorSummary: [{ text: "Incorrect email or password", href: "#email" }],
