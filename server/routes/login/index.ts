@@ -1,7 +1,11 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { User } from "../../models/user";
 import { AuthRateLimit } from "../../middleware/rate-limit";
-import { checkValidation, loginValidationRules } from "../../middleware/login-validation";
+import {
+  checkValidation,
+  loginValidationRules,
+  signupValidationRules,
+} from "../../middleware/login-validation";
 
 const router = Router();
 
@@ -20,7 +24,7 @@ router.post(
   AuthRateLimit,
   loginValidationRules,
   checkValidation("login/index.njk"),
-  async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
+  async (req: Request<unknown, unknown, LoginBody>, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -33,8 +37,11 @@ router.post(
       });
       return;
     }
-    req.session.userID = user.id;
-    res.redirect("/");
+    req.session.regenerate((err) => {
+      if (err) return next(err);
+      req.session.userID = user.id;
+      res.redirect("/");
+    });
   }
 );
 
@@ -45,13 +52,13 @@ router.get("/signup", (req, res) => {
 router.post(
   "/signup",
   AuthRateLimit,
-  loginValidationRules,
+  signupValidationRules,
   checkValidation("login/signup.njk"),
-  async (req: Request<unknown, unknown, LoginBody>, res: Response) => {
+  async (req: Request<unknown, unknown, LoginBody>, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const userCheck = await User.findOne({ email: email.toLowerCase() });
 
-    if (user) {
+    if (userCheck) {
       res.render("login/signup.njk", {
         errors: {
           errorSummary: [{ text: "That email address is already registered", href: "#email" }],
@@ -60,9 +67,12 @@ router.post(
       return;
     }
 
-    const newUser = await User.create({ email, password });
-    req.session.userID = newUser.id;
-    res.redirect("/");
+    const user = await User.create({ email, password });
+    req.session.regenerate((err) => {
+      if (err) return next(err);
+      req.session.userID = user.id;
+      res.redirect("/");
+    });
   }
 );
 

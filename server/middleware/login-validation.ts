@@ -1,15 +1,37 @@
 import { Request, Response, NextFunction } from "express";
 import { body, validationResult, ValidationError } from "express-validator";
 
+export const emailValidationRule = body("email")
+  .trim()
+  .notEmpty()
+  .withMessage("Enter your email address")
+  .bail()
+  .isEmail()
+  .withMessage("Enter a valid email");
+
 export const loginValidationRules = [
-  body("email")
-    .trim()
-    .notEmpty()
-    .withMessage("Enter your email address")
-    .bail()
-    .isEmail()
-    .withMessage("Enter a valid email"),
+  emailValidationRule,
   body("password").notEmpty().withMessage("Enter your password"),
+];
+
+export const signupValidationRules = [
+  emailValidationRule,
+  body("password")
+    .notEmpty()
+    .withMessage("Enter your password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters long")
+    .matches(/[A-Z]/)
+    .withMessage("Password must contain at least one uppercase letter")
+    .matches(/[a-z]/)
+    .withMessage("Password must contain at least one lowercase letter")
+    .matches(/[0-9]/)
+    .withMessage("Password must contain at least one number"),
+  body("confirmPassword")
+    .notEmpty()
+    .withMessage("Re-enter your password")
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage("Passwords do not match"),
 ];
 
 interface errorSummary {
