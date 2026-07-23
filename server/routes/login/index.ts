@@ -27,7 +27,7 @@ router.post(
   async (req: Request<unknown, unknown, LoginBody>, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email.toLowerCase() }).select("+password");
     const isValidPassword = user
       ? await user.comparePassword(password)
       : await compareToDummyHash(password);
