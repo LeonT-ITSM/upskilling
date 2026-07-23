@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { HttpError } from "../types/http-error";
+import { invalidCsrfTokenError } from "./csrf";
 
 export function globalErrorHandler(
   err: unknown,
@@ -14,6 +15,12 @@ export function globalErrorHandler(
       statusCode: err.statusCode,
       title: err.title,
       message: [err.message],
+    });
+  } else if (err === invalidCsrfTokenError) {
+    res.status(403).render("errors/index.njk", {
+      statusCode: 403,
+      title: "Forbidden",
+      message: ["Your form session has expired. Please go back and try again."],
     });
   } else {
     res.status(500).render("errors/index.njk", {
