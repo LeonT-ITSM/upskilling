@@ -35,7 +35,7 @@ userSchema.methods.comparePassword = function (candidate: string): Promise<boole
   return bcrypt.compare(candidate, this.password);
 };
 
-// Use a dummy hashed password to prevent timing attacks when the user is not found
+// nosemgrep: generic.secrets.security.detected-bcrypt-hash.detected-bcrypt-hash -- not a real hashed password, just a dummy hash to prevent timing attacks when the user is not found
 const DUMMY_PASSWORD_HASH = "$2b$12$/iA2o6oM4XK1HKu7vKExeOJtnV0yy9T.QZPb4Phg7lF7gNE7hWsLi";
 
 export function compareToDummyHash(candidate: string): Promise<boolean> {
